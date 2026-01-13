@@ -1,0 +1,183 @@
+---
+title: "MH3511 Lab 1 Notes"
+author: "Caleb Tay (caleb.tay@ntu.edu.sg)"
+date: "13 Jan 2026"
+output:
+  html_document:
+    toc: true
+    toc_float: true
+  pdf_document:
+    df_print: tibble
+    template: ../eisvogel.latex
+toc: true
+toc-own-page: true
+numbersections: true
+papersize: a4
+geometry:
+- top=25mm
+- left=25mm
+- right=25mm
+- bottom=25mm
+- headsep=4mm
+- footskip=10mm
+header-includes:
+   - \usepackage{graphicx}
+---
+
+# Exercise 1.1
+
+```{r results='hold'}
+205 + 106
+2 * 6 + 9 / 3
+2 * (6 + 9) / 3
+3^4 - 4^3
+28 %% 6
+```
+
+There is a general order of operations, which follows regular math.
+
+# Exercises 1.2
+
+```{r}
+red_apples <- 4
+green_apples <- 5
+basket_apples <- red_apples + green_apples
+18 * basket_apples
+```
+
+While you could do (c) with `basket_apples <- 4 + 5`, this makes the code less flexible when the variables `red_apples` and `green_apples` are representing a specific quantity, i.e. the number of red apples and green apples in the basket.
+
+For example, we can easily change the values of `red_apples` and `green_apples` and get the total sum, changing the values at *only one place*.
+
+# Exercise 1.3
+
+```{r}
+my_course <- "MH1234"
+my_score <- 76
+my_grade <- "A-"
+my_core <- TRUE
+
+class(my_course)
+class(my_score)
+class(my_grade)
+class(my_core)
+```
+
+# Exercise 1.4
+
+```{r}
+seq(10)
+seq(0, 10, length = 10)
+seq(0, 10, by = 1)
+rep(2, 3)
+rep(-1, 4)
+rep(1:3, 2)
+rep("A", 4)
+c(rep("A", 3), rep("B", 3))
+rep(c("A", "B"), 3)
+```
+
+```{r}
+vector1 <- seq(3, 9, 2)
+vector2 <- rep(2:4, 2:4)
+vector3 <- c(rep(T, 2), rep(F, 3))
+vector4 <- rep(c("High", "Medium", "Low"), 2)
+```
+
+# Exercise 1.5
+
+```{r}
+poker_winnings <- c(140, -50, 20, -120, 240)
+roulette_winnings <- c(-24, -50, 100, -350, 10)
+days <- c("Mon", "Tue", "Wed", "Thur", "Fri")
+
+poker_winnings
+names(poker_winnings) <- days
+poker_winnings
+
+names(roulette_winnings) <- days
+
+poker_winnings[poker_winnings > 0]
+
+daily_winnings <- poker_winnings + roulette_winnings
+daily_winnings[daily_winnings > 0]
+
+sum(poker_winnings)
+sum(roulette_winnings)
+```
+
+(j): Based on the summations, we can clearly see poker had a net gain, while roulette had a net loss.
+Clearly, don't play roulette.
+
+```{r}
+sum(daily_winnings)
+```
+(k): There was a net loss of $84 in the week.
+
+# Exercise 1.6
+
+```{r}
+matrix_4x2 <- matrix(1:8, ncol = 2)
+matrix_4x2
+
+matrix_2x4 <- matrix(c(1:4, 11:14), nrow = 2, byrow=T)
+matrix_2x4
+
+matrix_4x2 %*% matrix_2x4
+matrix_2x4 %*% matrix_4x2
+
+matrix_4x2
+matrix_2x2 <- matrix_4x2[1:2,]
+matrix_2x2
+```
+
+Note that matrix multiplication is done using `%*%` in R.
+The `solve()` function attempts to find the inverse of a square matrix.
+To verify it is the inverse, we can perform matrix multiplication.
+
+```{r}
+solve(matrix_2x2)
+matrix_2x2 %*% solve(matrix_2x2)
+
+diag(3)
+diag(c(2, 3, 5))
+```
+
+# Exercise 1.7
+
+```{r}
+apple <- c(350, 150)
+orange <- c(400, 230)
+watermelon <- c(180, 90)
+
+fruit_matrix <- matrix(c(apple, orange, watermelon), nrow = 3, byrow = T)
+
+fruit_matrix
+rownames(fruit_matrix) <- c("Apple", "Orange", "Watermelon")
+colnames(fruit_matrix) <- c("Weekday", "Weekend")
+fruit_matrix
+
+sum_fruit_matrix <- cbind(fruit_matrix, Total=rowSums(fruit_matrix))
+sum_fruit_matrix
+```
+
+Above, I add the weekday and weekend totals into a new matrix just so it is easier to run repeatedly.
+
+```{r}
+sum_fruit_matrix[,"Total"] * c(1, 1.5, 4)
+sum(sum_fruit_matrix[,"Total"] * c(1, 1.5, 4))
+
+sum_fruit_matrix[,"Total"] %*% c(1, 1.5, 4)
+c(1, 1.5, 4) %*% sum_fruit_matrix[,"Total"]
+```
+
+The `%*%` operator here is acting on two *vectors*, so the inner product of the two vectors is obtained instead.
+
+# Getting help on matrix multiplication
+
+As a side note, to get help on matrix multiplication (or any other operator), you have to surround it with backticks (\`\`\`).
+
+```{r eval=FALSE}
+?`%*%`
+help(`%*%`)
+```
