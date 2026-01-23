@@ -1,7 +1,7 @@
 ---
 title: "MH3511 Lab 1 Notes"
 author: "Caleb Tay (caleb.tay@ntu.edu.sg)"
-date: "13 Jan 2026"
+date: "22 Jan 2026"
 output:
   html_document:
     toc: true
@@ -22,6 +22,9 @@ geometry:
 - footskip=10mm
 header-includes:
    - \usepackage{graphicx}
+editor_options:
+  markdown:
+    wrap: 80
 ---
 
 # Exercise 1.1
@@ -45,9 +48,12 @@ basket_apples <- red_apples + green_apples
 18 * basket_apples
 ```
 
-While you could do (c) with `basket_apples <- 4 + 5`, this makes the code less flexible when the variables `red_apples` and `green_apples` are representing a specific quantity, i.e. the number of red apples and green apples in the basket.
+While you could do (c) with `basket_apples <- 4 + 5`, this makes the code less
+flexible when the variables `red_apples` and `green_apples` are representing a
+specific quantity, i.e. the number of red apples and green apples in the basket.
 
-For example, we can easily change the values of `red_apples` and `green_apples` and get the total sum, changing the values at *only one place*.
+For example, we can easily change the values of `red_apples` and `green_apples`
+and get the total sum, changing the values at *only one place*.
 
 # Exercise 1.3
 
@@ -62,6 +68,8 @@ class(my_score)
 class(my_grade)
 class(my_core)
 ```
+
+Boolean values can be written with a single letter, i.e. `T` for `TRUE` and `F` for `FALSE`.
 
 # Exercise 1.4
 
@@ -81,7 +89,9 @@ rep(c("A", "B"), 3)
 vector1 <- seq(3, 9, 2)
 vector2 <- rep(2:4, 2:4)
 vector3 <- c(rep(T, 2), rep(F, 3))
+vector3 <- rep(c(T, F), c(2, 3))
 vector4 <- rep(c("High", "Medium", "Low"), 2)
+vector1; vector2; vector3; vector4
 ```
 
 # Exercise 1.5
@@ -92,27 +102,32 @@ roulette_winnings <- c(-24, -50, 100, -350, 10)
 days <- c("Mon", "Tue", "Wed", "Thur", "Fri")
 
 poker_winnings
+names(poker_winnings)
 names(poker_winnings) <- days
 poker_winnings
 
 names(roulette_winnings) <- days
-
+poker_winnings
+poker_winnings > 0
 poker_winnings[poker_winnings > 0]
 
 daily_winnings <- poker_winnings + roulette_winnings
+daily_winnings
+daily_winnings > 0
 daily_winnings[daily_winnings > 0]
 
 sum(poker_winnings)
 sum(roulette_winnings)
 ```
 
-(j): Based on the summations, we can clearly see poker had a net gain, while roulette had a net loss.
-Clearly, don't play roulette.
+(j): Based on the summations, we can clearly see poker had a net gain, while
+roulette had a net loss. Clearly, don't play roulette.
 
 ```{r}
 sum(daily_winnings)
 ```
-(k): There was a net loss of $84 in the week.
+
+(k): There was a net loss of \$84 in the week.
 
 # Exercise 1.6
 
@@ -125,15 +140,17 @@ matrix_2x4
 
 matrix_4x2 %*% matrix_2x4
 matrix_2x4 %*% matrix_4x2
+```
 
+```{r}
 matrix_4x2
 matrix_2x2 <- matrix_4x2[1:2,]
 matrix_2x2
 ```
 
-Note that matrix multiplication is done using `%*%` in R.
-The `solve()` function attempts to find the inverse of a square matrix.
-To verify it is the inverse, we can perform matrix multiplication.
+Note that matrix multiplication is done using `%*%` in R. The `solve()` function
+attempts to find the inverse of a square matrix. To verify it is the inverse, we
+can perform matrix multiplication.
 
 ```{r}
 solve(matrix_2x2)
@@ -141,6 +158,7 @@ matrix_2x2 %*% solve(matrix_2x2)
 
 diag(3)
 diag(c(2, 3, 5))
+diag(matrix_2x2)
 ```
 
 # Exercise 1.7
@@ -161,7 +179,8 @@ sum_fruit_matrix <- cbind(fruit_matrix, Total=rowSums(fruit_matrix))
 sum_fruit_matrix
 ```
 
-Above, I add the weekday and weekend totals into a new matrix just so it is easier to run repeatedly.
+Above, I add the weekday and weekend totals into a new matrix just so it is
+easier to run repeatedly.
 
 ```{r}
 sum_fruit_matrix[,"Total"] * c(1, 1.5, 4)
@@ -171,11 +190,14 @@ sum_fruit_matrix[,"Total"] %*% c(1, 1.5, 4)
 c(1, 1.5, 4) %*% sum_fruit_matrix[,"Total"]
 ```
 
-The `%*%` operator here is acting on two *vectors*, so the inner product of the two vectors is obtained instead.
+The `%*%` operator here is acting on two *vectors*, so the inner product of the
+two vectors is obtained instead.
 
 # Getting help on matrix multiplication
 
-As a side note, to get help on matrix multiplication (or any other operator), you have to surround it with backticks (\`\`\`).
+As a side note, to get help on matrix multiplication (or any other operator),
+you have to surround it with backticks (\`), typically found above the tab key,
+with the tilde (\~).
 
 ```{r eval=FALSE}
 ?`%*%`

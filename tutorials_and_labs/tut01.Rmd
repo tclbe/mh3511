@@ -1,14 +1,14 @@
 ---
 title: "MH3511 Tut 1 Notes"
 author: "Caleb Tay (caleb.tay@ntu.edu.sg)"
-date: "13 Jan 2026"
+date: "22 Jan 2026"
 output:
-  html_document:
-    toc: true
-    toc_float: true
   pdf_document:
     df_print: tibble
     template: ../eisvogel.latex
+  html_document:
+    toc: true
+    toc_float: true
 toc: true
 toc-own-page: true
 numbersections: true
@@ -20,21 +20,28 @@ geometry:
 - bottom=25mm
 - headsep=4mm
 - footskip=10mm
+editor_options:
+  markdown:
+    wrap: 80
 ---
 
 # Introduction to R
 
-Generally speaking, R was built for statistical analysis, with many built-in functions.
-Similar functionality in Python must be imported from another library.
+Generally speaking, R was built for statistical analysis, with many built-in
+functions. Similar functionality in Python must be imported from another
+library.
 
-In future weeks, we will be seeing more probability distribution related functions.
+In future weeks, we will be seeing more probability distribution related
+functions.
 
 # The `cat()` and `print()` functions
 
-The `cat()` function (short for con`cat`enate) and the `print()` function can be used to display information to the user.
-Both, however, work slightly differently.
+The `cat()` function (short for con`cat`enate) and the `print()` function can be
+used to display information to the user. Both, however, work slightly
+differently.
 
-We will not frequently use the `cat()` or `print()` functions, because we generally see the output immediately.
+You may use them in function definitions to display intermediate results or
+information.
 
 ```{r results='hide'}
 cat('abc')
@@ -43,8 +50,8 @@ print('xyz')
 
 # Assignment operator (`<-` or `=`)
 
-`<-` and `=` can both be used to assign values to variables in R.
-For consistency I will just use `<-`.
+`<-` and `=` can both be used to assign values to variables in R. For
+consistency I will just use `<-`.
 
 ```{r}
 x = 1
@@ -54,8 +61,9 @@ cat('x has the value', x, ', y has the value', y)
 
 # Vectors (`c()`)
 
-Vectors are created using the `c()` function.
-When a range of consecutive numbers is desired, we can also use `start:end` to get a vector of all numbers between `start` and `end`, inclusive of both ends.
+Vectors are created using the `c()` function. When a range of consecutive
+numbers is desired, we can also use `start:end` to get a vector of all numbers
+between `start` and `end`, inclusive of both ends.
 
 ```{r}
 v1 <- c(1, 3, 5, 7, 9, 11)
@@ -73,10 +81,11 @@ cat('v1 has length', length(v1))
 
 `seq()` and `rep()` are two functions to form vectors.
 
-There is not much to say about `seq()` - its most basic use is to form numerical vectors.
-It is short for `seq`uence generation.
-A similar function in Python is `range()`, but they are not precisely the same.
-The ending number here is always included, and the step size (and thus the resulting vector) can be a float (e.g. `1.3`).
+There is not much to say about `seq()` - its most basic use is to form numerical
+vectors. It is short for `seq`uence generation. A similar function in Python is
+`range()`, but they are not precisely the same. The ending number here is always
+included, and the step size (and thus the resulting vector) can be a float (e.g.
+`1.3`).
 
 ```{r}
 # Basic usage: seq(from, to, by)
@@ -86,15 +95,15 @@ seq(5, 14, 3)
 seq(5, 14, length.out=11)
 ```
 
-`rep()` on the other hand, `rep`eats things passed to it.
-It can be passed *vectors* to be repeated, as well as the number of times to be repeated.
-The number of elements in `x` must match the number of elements in `times`.
+`rep()` on the other hand, `rep`eats things passed to it. It can be passed
+*vectors* to be repeated, as well as the number of times to be repeated. The
+number of elements in `x` must match the number of elements in `times`.
 
 ```{r}
 # Basic usage: rep(x, times)
 rep(12, 3)
 rep(10:13, 3)
-rep(11:14, 1:4)
+rep(11:14, 1:4) # repeat '11' 1 time, '12' 2 times, ...
 ```
 
 You can, of course, compose the two, and repeat more than just numbers.
@@ -105,14 +114,13 @@ rep(c("a", "b", "c"), seq(1, 5, 2))
 
 # Matrices
 
-Matrices in R are similar to matrices in math.
-They can be created in several ways.
+Matrices in R are similar to matrices in math. They can be created in several
+ways.
 
 ## `dim()`
 
-`dim()` tells us the dimension of an object.
-A vector has no dimension, only length.
-We can assign a dimension to a vector to make it a matrix.
+`dim()` tells us the dimension of an object. A vector has no dimension, only
+length. We can assign a dimension to a vector to make it a matrix.
 
 ```{r}
 dim(v1)
@@ -122,22 +130,27 @@ v1      # now a 3x2 matrix
 
 ## `matrix()`
 
-We can create matrices directly with `matrix()`.
-Specify the parameter(s) `ncol`, `nrow`, and/or `byrow` to determine how the matrix should be created.
+We can create matrices directly with `matrix()`. Specify the parameter(s)
+`ncol`, `nrow`, and/or `byrow` to determine how the entries should be put into
+the matrix. If `byrow=F` (which is the default), entries will be put in
+column-by-column. If `byrow=T`, then entries will be put in row-by-row.
 
 ```{r}
 matrix(1:10, nrow = 2)
-matrix(1:10, ncol = 2)
+matrix(1:10, ncol = 5)
 matrix(1:10, ncol = 5, byrow=T)
 ```
 
 ## `rbind()` and `cbind()`
 
-Matrices can also be made using `rbind()` and `cbind()` on vectors or other matrices.
+Matrices can also be made using `rbind()` and `cbind()` on vectors or other
+matrices.
 
 ```{r}
 a <- matrix(1:10, nrow = 2)
 b <- matrix(11:20, nrow = 2)
+a
+b
 cbind(a, b)
 rbind(a, b)
 
@@ -146,53 +159,72 @@ rbind(1:5, 6:10)
 
 ## Getting help (`?` and `help()`)
 
-Many functions in R have documentation on them, i.e. what the function does, how the function is used, the parameters it accepts.
-If you ever forget what a function does or how to use it, in the R console you can use the `?` operator or the `help()` function.
+Many functions in R have documentation on them, i.e. what the function does, how
+the function is used, the parameters it accepts. If you ever forget what a
+function does or how to use it, in the R console you can use the `?` operator or
+the `help()` function.
 
-For example, typing `?matrix` or `help(matrix)` *without the parentheses* will bring up the documentation page for the `matrix()` function.
+For example, typing `?matrix` or `help(matrix)` *without the parentheses* will
+bring up the documentation page for the `matrix()` function.
 
 # Data frames (`data.frame`)
 
-Matrices are limited to having data all of the same type (e.g. number, text, boolean) Data frames are just matrices, which allow for a mix of data types.
-They can be created with the `data.frame()` function on any matrix or vector.
+Data frames (and matrices) are a collection of data, organised in **rows** and
+**columns**. They can be created with the `data.frame()` function. In this case,
+there are 3 sets of data.
+
+Matrices are limited to having data all of the same type (e.g. number, text,
+boolean). Data frames allow for a mix of data types. They can be created with
+the `data.frame()` function on any matrix or vector, or created directly.
 
 ```{r}
-df1 <- data.frame(1:5)
-df1
-a
-df2 <- data.frame(a)
-df2
+df <- data.frame(c(26, 24), c(175, 172), c("M", "F"))
+df
 ```
 
-The rows are individual observations, the columns are the data of each observation.
-By default, the columns are assigned the names `X1, X2, ..., Xn` for each column, and the rows are assigned numerical labels.
-We can see the column names, and assign new names using the `names()` function.
+The rows are individual observations, the columns are the data of each
+observation. By default, the columns are not assigned any meaningful names, and
+the rows are assigned numerical labels. We can see the column names and assign
+new names using the `names()` (or `colnames()` function.
 
 ```{r}
-names(df2)
-names(df2) <- c('age', 'height', 'weight', 'grade', 'money')
-df2
+names(df) # equivalently, colnames(df)
+names(df) <- c('age', 'height', 'gender')
+df
+```
+
+The column names could also be given directly in the `data.frame()` function:
+
+```{r}
+df1 <- data.frame(age = c(26, 24), height = c(175, 172), gender = c("M", "F"))
+df1
 ```
 
 We can also change the row names if desired using `row.names()`.
 
 ```{r}
-row.names(df2)
-row.names(df2) <- c('caleb', 'you')
-df2
+row.names(df)
+row.names(df) <- c('caleb', 'taylor')
+df
 ```
 
-Now, to describe this data frame, I will say that this data frame has 2 observations (rows), and 5 data points (columns) for each observation.
-The interpretation of this data frame with these row and column names should come naturally.
+Now, to describe this data frame, I will say that this data frame has 2
+observations (rows), and 3 data points (columns) for each observation. The
+interpretation of this data frame with these row and column names should come
+naturally.
 
-In this course, in general, we will not be creating data frames or matrices directly.
-Instead, most data will be imported using a `read` function, which we will see in the lab, or imported from another library, which we will see in a few weeks.
+In this course, in general, we will not be creating data frames or matrices
+directly. Instead, most data will be imported using a `read` function, which we
+will see in the lab, or imported from another library, which we will see in a
+few weeks.
 
 # Indexing vectors, matrices, and data frames
 
-To get a single value in a vector, matrix, or data frame, we can use indexing with square brackets `[]`.
-Indexing in R is extremely similar to indexing in Python, but unlike Python, which is 0-indexed, R is 1-indexed, so the first entry in a list always has index 1.
-Vectors in R are analogous to lists in Python (that do not contain other lists), and require only one indexing.
+To get a single value in a vector, matrix, or data frame, we can use indexing
+with square brackets `[]`. Indexing in R is extremely similar to indexing in
+Python, but unlike Python, which is 0-indexed, R is 1-indexed, so the first
+entry in a list always has index 1. Vectors in R are analogous to lists in
+Python (that do not contain other lists), and require only one indexing.
 
 ```{r}
 x <- 1:5*10
@@ -200,36 +232,41 @@ x
 x[2]            # Get the second element
 ```
 
-For matrices and data frames, as they have two dimensions (rows and columns), we have the option to get rows, columns, or individual cells.
-The square bracket notation is the same, but we now have the option to index along the rows or columns or both.
-Take note of the below examples, noting the presence of the commas and blank entries.
+For matrices and data frames, as they have two dimensions (rows and columns), we
+have the option to get rows, columns, or individual cells. The square bracket
+notation is the same, but we now have the option to index along the rows or
+columns or both. Take note of the below examples, noting the presence of the
+commas and blank entries.
 
 ```{r}
-df2['age']      # with no comma, selects columns, return as *data frame*.
+df
+df['age']      # with no comma, selects columns, return as *data frame*.
                 # or with comma, first is row, second is column.
-df2[, 'age']    # selects all rows, and only column 'age', return as *vector*.
-df2['caleb',]   # selects only row 'caleb', and all columns, return as *data frame*.
+df[, 'age']    # selects all rows, and only column 'age', return as *vector*.
+df['caleb',]   # selects only row 'caleb', and all columns, return as *data frame*.
 ```
 
-In general, the indexing is done as `thing_to_index[rows, columns]`.
-Columns in data frames can also be accessed using a `$` operator.
+In general, the indexing is done as `thing_to_index[rows, columns]`. Columns in
+data frames can also be accessed using a `$` operator.
 
 ```{r}
-df2$age         # equivalent to df2[, 'age'], return as vector.
+df$age         # equivalent to df[, 'age'], return as vector.
 ```
 
 To select multiple rows or multiple columns, you can pass in vectors as indexes.
-Selections can also be made using numerical indices.
-You can see that the below have the exact same output as using the named indices above.
+Selections can also be made using numerical indices. You can see that the below
+have the exact same output as using the named indices above.
 
 ```{r}
-df2[1:3]
-df2[, c(2, 5)]
-df2[1, ]
+df
+df[1:2]
+df[, c(1, 3)]
+df[1, ]
 ```
 
-Indexing for vectors and matrices is extremely similar.
-As an exercise, index the following values from the below matrix, using the `c()` function if necessary.
+Indexing for vectors and matrices is extremely similar. As an exercise, index
+the following values from the below matrix, using the `c()` function if
+necessary.
 
 ```{r}
 m1 <- matrix(1:20, nrow=4, byrow=T)
