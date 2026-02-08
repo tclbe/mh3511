@@ -8,3 +8,5 @@ and lab 2 ([html](https://tclbe.github.io/mh3511/tutorials_and_labs/lab02.html),
 
 * Week 4: tutorial 3 ([html](https://tclbe.github.io/mh3511/tutorials_and_labs/tut03.html), [pdf](https://tclbe.github.io/mh3511/tutorials_and_labs/tut03.pdf))
 and lab 3 ([html](https://tclbe.github.io/mh3511/tutorials_and_labs/lab03.html), [pdf](https://tclbe.github.io/mh3511/tutorials_and_labs/lab03.pdf))
+
+* Week 5: lab 4 ([html](https://tclbe.github.io/mh3511/tutorials_and_labs/lab04.html), [pdf](https://tclbe.github.io/mh3511/tutorials_and_labs/lab04.pdf))
