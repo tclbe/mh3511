@@ -1480,7 +1480,7 @@ border-radius: 0px;
 
 <h1 class="title toc-ignore">MH3511 Lab 4 Notes</h1>
 <h4 class="author">Caleb Tay (<a href="mailto:caleb.tay@ntu.edu.sg" class="email">caleb.tay@ntu.edu.sg</a>)</h4>
-<h4 class="date">8 Feb 2026</h4>
+<h4 class="date">9 Feb 2026</h4>
 
 </div>
 
@@ -1650,95 +1650,210 @@ painlevel(c(2,7,9))</code></pre>
 </div>
 <div id="exercise-4.3" class="section level1">
 <h1>Exercise 4.3</h1>
+<p>The suggested solution makes use of the implicit repeating of rows
+for <code>Treatment</code> and <code>Period</code> until the number of
+entries (3 and 9 respectively) matches the number of entries for
+<code>Subject</code> (27 entries).</p>
+<pre class="r"><code>n=27
+Subject = rep(1001:(1001+n-1), rep(3, n))
+Treatment &lt;- c(&quot;Placebo&quot;, &quot;Low Dose&quot;, &quot;High Dose&quot;)
+Period = c(1,2,3,3,1,2,2,3,1)
+data.frame(Subject, Treatment, Period)</code></pre>
+<pre><code>##    Subject Treatment Period
+## 1     1001   Placebo      1
+## 2     1001  Low Dose      2
+## 3     1001 High Dose      3
+## 4     1002   Placebo      3
+## 5     1002  Low Dose      1
+## 6     1002 High Dose      2
+## 7     1003   Placebo      2
+## 8     1003  Low Dose      3
+## 9     1003 High Dose      1
+## 10    1004   Placebo      1
+## 11    1004  Low Dose      2
+## 12    1004 High Dose      3
+## 13    1005   Placebo      3
+## 14    1005  Low Dose      1
+## 15    1005 High Dose      2
+## 16    1006   Placebo      2
+## 17    1006  Low Dose      3
+## 18    1006 High Dose      1
+## 19    1007   Placebo      1
+## 20    1007  Low Dose      2
+## 21    1007 High Dose      3
+## 22    1008   Placebo      3
+## 23    1008  Low Dose      1
+## 24    1008 High Dose      2
+## 25    1009   Placebo      2
+## 26    1009  Low Dose      3
+## 27    1009 High Dose      1
+## 28    1010   Placebo      1
+## 29    1010  Low Dose      2
+## 30    1010 High Dose      3
+## 31    1011   Placebo      3
+## 32    1011  Low Dose      1
+## 33    1011 High Dose      2
+## 34    1012   Placebo      2
+## 35    1012  Low Dose      3
+## 36    1012 High Dose      1
+## 37    1013   Placebo      1
+## 38    1013  Low Dose      2
+## 39    1013 High Dose      3
+## 40    1014   Placebo      3
+## 41    1014  Low Dose      1
+## 42    1014 High Dose      2
+## 43    1015   Placebo      2
+## 44    1015  Low Dose      3
+## 45    1015 High Dose      1
+## 46    1016   Placebo      1
+## 47    1016  Low Dose      2
+## 48    1016 High Dose      3
+## 49    1017   Placebo      3
+## 50    1017  Low Dose      1
+## 51    1017 High Dose      2
+## 52    1018   Placebo      2
+## 53    1018  Low Dose      3
+## 54    1018 High Dose      1
+## 55    1019   Placebo      1
+## 56    1019  Low Dose      2
+## 57    1019 High Dose      3
+## 58    1020   Placebo      3
+## 59    1020  Low Dose      1
+## 60    1020 High Dose      2
+## 61    1021   Placebo      2
+## 62    1021  Low Dose      3
+## 63    1021 High Dose      1
+## 64    1022   Placebo      1
+## 65    1022  Low Dose      2
+## 66    1022 High Dose      3
+## 67    1023   Placebo      3
+## 68    1023  Low Dose      1
+## 69    1023 High Dose      2
+## 70    1024   Placebo      2
+## 71    1024  Low Dose      3
+## 72    1024 High Dose      1
+## 73    1025   Placebo      1
+## 74    1025  Low Dose      2
+## 75    1025 High Dose      3
+## 76    1026   Placebo      3
+## 77    1026  Low Dose      1
+## 78    1026 High Dose      2
+## 79    1027   Placebo      2
+## 80    1027  Low Dose      3
+## 81    1027 High Dose      1</code></pre>
+<p>I find it more comforting to specify the data for each row:</p>
 <pre class="r"><code>n = 27
-ex4.3 &lt;- data.frame(
-  Subject = rep(1001:(1001+n-1), rep(3,n)),
-  Treatment = rep(c(&quot;Placebo&quot;, &quot;Low Dose&quot;, &quot;High Dose&quot;), n),
-  Period = rep(1:3, n)
-)
+Subject &lt;- rep(1001:(1001+n-1), rep(3, n))
+
+treatments &lt;- c(&quot;Placebo&quot;, &quot;Low Dose&quot;, &quot;High Dose&quot;)
+Treatment &lt;- rep(treatments, n)
+
+Period = rep(c(1,2,3,3,1,2,2,3,1), n/3)
+
+ex4.3 &lt;- data.frame(Subject, Treatment, Period)
 ex4.3</code></pre>
 <pre><code>##    Subject Treatment Period
 ## 1     1001   Placebo      1
 ## 2     1001  Low Dose      2
 ## 3     1001 High Dose      3
-## 4     1002   Placebo      1
-## 5     1002  Low Dose      2
-## 6     1002 High Dose      3
-## 7     1003   Placebo      1
-## 8     1003  Low Dose      2
-## 9     1003 High Dose      3
+## 4     1002   Placebo      3
+## 5     1002  Low Dose      1
+## 6     1002 High Dose      2
+## 7     1003   Placebo      2
+## 8     1003  Low Dose      3
+## 9     1003 High Dose      1
 ## 10    1004   Placebo      1
 ## 11    1004  Low Dose      2
 ## 12    1004 High Dose      3
-## 13    1005   Placebo      1
-## 14    1005  Low Dose      2
-## 15    1005 High Dose      3
-## 16    1006   Placebo      1
-## 17    1006  Low Dose      2
-## 18    1006 High Dose      3
+## 13    1005   Placebo      3
+## 14    1005  Low Dose      1
+## 15    1005 High Dose      2
+## 16    1006   Placebo      2
+## 17    1006  Low Dose      3
+## 18    1006 High Dose      1
 ## 19    1007   Placebo      1
 ## 20    1007  Low Dose      2
 ## 21    1007 High Dose      3
-## 22    1008   Placebo      1
-## 23    1008  Low Dose      2
-## 24    1008 High Dose      3
-## 25    1009   Placebo      1
-## 26    1009  Low Dose      2
-## 27    1009 High Dose      3
+## 22    1008   Placebo      3
+## 23    1008  Low Dose      1
+## 24    1008 High Dose      2
+## 25    1009   Placebo      2
+## 26    1009  Low Dose      3
+## 27    1009 High Dose      1
 ## 28    1010   Placebo      1
 ## 29    1010  Low Dose      2
 ## 30    1010 High Dose      3
-## 31    1011   Placebo      1
-## 32    1011  Low Dose      2
-## 33    1011 High Dose      3
-## 34    1012   Placebo      1
-## 35    1012  Low Dose      2
-## 36    1012 High Dose      3
+## 31    1011   Placebo      3
+## 32    1011  Low Dose      1
+## 33    1011 High Dose      2
+## 34    1012   Placebo      2
+## 35    1012  Low Dose      3
+## 36    1012 High Dose      1
 ## 37    1013   Placebo      1
 ## 38    1013  Low Dose      2
 ## 39    1013 High Dose      3
-## 40    1014   Placebo      1
-## 41    1014  Low Dose      2
-## 42    1014 High Dose      3
-## 43    1015   Placebo      1
-## 44    1015  Low Dose      2
-## 45    1015 High Dose      3
+## 40    1014   Placebo      3
+## 41    1014  Low Dose      1
+## 42    1014 High Dose      2
+## 43    1015   Placebo      2
+## 44    1015  Low Dose      3
+## 45    1015 High Dose      1
 ## 46    1016   Placebo      1
 ## 47    1016  Low Dose      2
 ## 48    1016 High Dose      3
-## 49    1017   Placebo      1
-## 50    1017  Low Dose      2
-## 51    1017 High Dose      3
-## 52    1018   Placebo      1
-## 53    1018  Low Dose      2
-## 54    1018 High Dose      3
+## 49    1017   Placebo      3
+## 50    1017  Low Dose      1
+## 51    1017 High Dose      2
+## 52    1018   Placebo      2
+## 53    1018  Low Dose      3
+## 54    1018 High Dose      1
 ## 55    1019   Placebo      1
 ## 56    1019  Low Dose      2
 ## 57    1019 High Dose      3
-## 58    1020   Placebo      1
-## 59    1020  Low Dose      2
-## 60    1020 High Dose      3
-## 61    1021   Placebo      1
-## 62    1021  Low Dose      2
-## 63    1021 High Dose      3
+## 58    1020   Placebo      3
+## 59    1020  Low Dose      1
+## 60    1020 High Dose      2
+## 61    1021   Placebo      2
+## 62    1021  Low Dose      3
+## 63    1021 High Dose      1
 ## 64    1022   Placebo      1
 ## 65    1022  Low Dose      2
 ## 66    1022 High Dose      3
-## 67    1023   Placebo      1
-## 68    1023  Low Dose      2
-## 69    1023 High Dose      3
-## 70    1024   Placebo      1
-## 71    1024  Low Dose      2
-## 72    1024 High Dose      3
+## 67    1023   Placebo      3
+## 68    1023  Low Dose      1
+## 69    1023 High Dose      2
+## 70    1024   Placebo      2
+## 71    1024  Low Dose      3
+## 72    1024 High Dose      1
 ## 73    1025   Placebo      1
 ## 74    1025  Low Dose      2
 ## 75    1025 High Dose      3
-## 76    1026   Placebo      1
-## 77    1026  Low Dose      2
-## 78    1026 High Dose      3
-## 79    1027   Placebo      1
-## 80    1027  Low Dose      2
-## 81    1027 High Dose      3</code></pre>
+## 76    1026   Placebo      3
+## 77    1026  Low Dose      1
+## 78    1026 High Dose      2
+## 79    1027   Placebo      2
+## 80    1027  Low Dose      3
+## 81    1027 High Dose      1</code></pre>
+<p>Out of scope, but a generalised way to make the sequence for any
+<code>n</code>, assuming the sequence 1-2-3, 3-1-2, 2-3-1:</p>
+<pre class="r"><code>n = 4
+Period = rep(0:2, n)
+Period</code></pre>
+<pre><code>##  [1] 0 1 2 0 1 2 0 1 2 0 1 2</code></pre>
+<pre class="r"><code>seq(0, 3*n-1)</code></pre>
+<pre><code>##  [1]  0  1  2  3  4  5  6  7  8  9 10 11</code></pre>
+<pre class="r"><code>seq(0, 3*n-1) %/% 3 # floor division</code></pre>
+<pre><code>##  [1] 0 0 0 1 1 1 2 2 2 3 3 3</code></pre>
+<pre class="r"><code>Period = Period - seq(0, 3*n-1) %/% 3
+Period</code></pre>
+<pre><code>##  [1]  0  1  2 -1  0  1 -2 -1  0 -3 -2 -1</code></pre>
+<pre class="r"><code>Period %% 3</code></pre>
+<pre><code>##  [1] 0 1 2 2 0 1 1 2 0 0 1 2</code></pre>
+<pre class="r"><code>Period %% 3 + 1</code></pre>
+<pre><code>##  [1] 1 2 3 3 1 2 2 3 1 1 2 3</code></pre>
+<pre class="r"><code>Period = (rep(0:2, n) - seq(0, 3*n-1) %/% 3) %% 3 + 1
+Period</code></pre>
+<pre><code>##  [1] 1 2 3 3 1 2 2 3 1 1 2 3</code></pre>
 </div>
 <div id="exercise-4.4" class="section level1">
 <h1>Exercise 4.4</h1>
