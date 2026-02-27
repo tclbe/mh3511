@@ -1515,8 +1515,15 @@ and <span class="math inline">\(Var(aX+b) = a^2Var(X)\)</span>.</p>
 <h1>Confidence intervals</h1>
 <p>Confidence intervals are expressed with some value between 0 and 1.
 In the context of estimating the sample mean, for example, a
-0.9-confidence interval represents an interval that has a 90%
-probability of containing the true population mean.</p>
+0.9-confidence interval means that if we repeatedly construct
+0.9-confidence intervals by sampling from the same population,
+approximately 90% of them will contain the true population mean.</p>
+<p>The notion that “there is a 90% probability of the population mean
+being in this confidence interval” is inaccurate solely on a
+technicality that taking this perspective implies that the confidence
+interval is fixed (there are many confidence intervals) and that the
+population mean is a random variable (it is fixed). In my opinion, it is
+a good enough intuition.</p>
 <p>Here, what we really want is the population mean - but we since that
 is typically infeasible to calculate, we use the sample mean as an
 estimate. Typically, the sample mean has a nice distribution (normally
@@ -1549,12 +1556,14 @@ consider the standardised sample mean <span class="math inline">\(((\bar{X}-10)/
 a well-known distribution with pre-computed quantiles. We get the
 quantiles of interest from the z-table - for a 90% confidence interval,
 say <span class="math inline">\(\pm1.645\)</span>.</p>
-<p><span class="math display">\[\begin{align*}
+<p><span class="math display">\[
+\begin{align*}
 0.9 = P \left( -1.645 \leq \frac{\bar{X}-10}{2} \leq 1.645 \right)
 &amp;= P(-3.29 \leq \bar{X}-10 \leq 3.29) \\
 &amp;= P(6.71 \leq \bar{X} \leq 13.29)
 = 0.9
-\end{align*}\]</span></p>
+\end{align*}
+\]</span></p>
 <p>From which we can see a 0.9-confidence interval is <span class="math inline">\((6.71, 13.29)\)</span>, which lines up with the
 two-sided confidence interval graphed above.</p>
 </div>
