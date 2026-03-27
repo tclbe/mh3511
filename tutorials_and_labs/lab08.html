@@ -11,9 +11,9 @@
 
 <meta name="author" content="Caleb Tay (caleb.tay@ntu.edu.sg)" />
 
-<meta name="date" content="2026-03-20" />
+<meta name="date" content="2026-03-27" />
 
-<title>MH3511 Lab 7 Notes</title>
+<title>MH3511 Lab 8 Notes</title>
 
 <script>// Pandoc 2.9 adds attributes on both header and div. We remove the former (to
 // be compatible with the behavior of Pandoc < 2.8).
@@ -1479,9 +1479,9 @@ border-radius: 0px;
 
 
 
-<h1 class="title toc-ignore">MH3511 Lab 7 Notes</h1>
+<h1 class="title toc-ignore">MH3511 Lab 8 Notes</h1>
 <h4 class="author">Caleb Tay (<a href="mailto:caleb.tay@ntu.edu.sg" class="email">caleb.tay@ntu.edu.sg</a>)</h4>
-<h4 class="date">20 Mar 2026</h4>
+<h4 class="date">27 Mar 2026</h4>
 
 </div>
 
@@ -1556,6 +1556,8 @@ tstat</code></pre>
 <pre class="r"><code>v &lt;- ( (s.a^2 / n.a + s.b^2 / n.b)^2 ) / ( (s.a^2 / n.a)^2 / (n.a - 1) + (s.b^2 / n.b)^2 / (n.b - 1) )
 v</code></pre>
 <pre><code>## [1] 7.375586</code></pre>
+<pre class="r"><code>1 - pt(tstat, v)</code></pre>
+<pre><code>## [1] 0.1651919</code></pre>
 <p>Note that depending on how we phrase the hypothesis, we could have
 considered either <span class="math inline">\(H_1: \mu_B - \mu_A &gt;
 0\)</span>, or equivalently <span class="math inline">\(H_1: \mu_A -
@@ -1617,6 +1619,10 @@ aggregate(faculty$salary, list(faculty$male), FUN=length)</code></pre>
 <pre><code>##   Group.1   x
 ## 1     Men 386
 ## 2   Women 128</code></pre>
+<pre class="r"><code>aggregate(salary ~ male, data=faculty, FUN=length)</code></pre>
+<pre><code>##    male salary
+## 1   Men    386
+## 2 Women    128</code></pre>
 <pre class="r"><code>library(dplyr)</code></pre>
 <pre><code>## 
 ## Attaching package: &#39;dplyr&#39;</code></pre>
@@ -1714,6 +1720,18 @@ boxplot(salary ~ male, subset(faculty, rank == &quot;Assistant&quot;),
 ## sample estimates:
 ## ratio of variances 
 ##            1.91096</code></pre>
+<pre class="r"><code>var.test(salary.f.asst, salary.m.asst)</code></pre>
+<pre><code>## 
+##  F test to compare two variances
+## 
+## data:  salary.f.asst and salary.m.asst
+## F = 0.5233, num df = 59, denom df = 82, p-value = 0.009523
+## alternative hypothesis: true ratio of variances is not equal to 1
+## 95 percent confidence interval:
+##  0.3277706 0.8512992
+## sample estimates:
+## ratio of variances 
+##          0.5232972</code></pre>
 <pre class="r"><code>t.test(salary.m.asst, salary.f.asst, alternative=&quot;greater&quot;, var.equal=F)</code></pre>
 <pre><code>## 
 ##  Welch Two Sample t-test
@@ -1754,11 +1772,14 @@ t.test(fert.new, fert.old, paired=T, mu=250, alternative=&quot;greater&quot;)</c
 ## sample estimates:
 ## mean difference 
 ##        295.5556</code></pre>
-<pre class="r"><code>t.test(fert.new - fert.old, mu=250, alternative=&quot;greater&quot;)</code></pre>
+<pre class="r"><code># fert.new - fert.old &gt; 250
+
+fert.diff &lt;- fert.new - fert.old
+t.test(fert.diff, mu=250, alternative=&quot;greater&quot;)</code></pre>
 <pre><code>## 
 ##  One Sample t-test
 ## 
-## data:  fert.new - fert.old
+## data:  fert.diff
 ## t = 1.6948, df = 8, p-value = 0.06428
 ## alternative hypothesis: true mean is greater than 250
 ## 95 percent confidence interval:
@@ -1809,6 +1830,16 @@ the mean, only the median!</p>
 ## 1       A 0.7500000
 ## 2       B 2.1944444
 ## 3       C 0.6111111</code></pre>
+<pre class="r"><code>aggregate(response~drug, FUN=length, data=pain)</code></pre>
+<pre><code>##   drug response
+## 1    A        9
+## 2    B        9
+## 3    C        9</code></pre>
+<pre class="r"><code>aggregate(response~drug, FUN=var, data=pain)</code></pre>
+<pre><code>##   drug  response
+## 1    A 0.7500000
+## 2    B 2.1944444
+## 3    C 0.6111111</code></pre>
 <pre class="r"><code>library(dplyr)
 pain %&gt;% group_by(drug) %&gt;% summarise(n(), var(response))</code></pre>
 <pre><code>## # A tibble: 3 × 3
@@ -1842,8 +1873,8 @@ SSW = \sum_{i=1}^k \sum_{j=1}^{n_i} (X_{ij} - \bar{X}_i)^2
 \\
 SST = \sum_{i=1}^k \sum_{j=1}^{n_i} (X_{ij} - \bar{X})^2 = (n-1)s^2
 \]</span></p>
-<p>which are related by $ SST = SSB + SSW $. What we want is SSB and
-SSW.</p>
+<p>which are related by <span class="math inline">\(SST = SSB +
+SSW\)</span>. What we want is SSB and SSW.</p>
 <pre class="r"><code>sst &lt;- sum((pain$response - mean(pain$response))^2)
 
 drug.means &lt;- aggregate(pain$response, list(pain$drug), mean)
@@ -1868,8 +1899,14 @@ S_b^2 = \frac{1}{k-1} \sum_{i=1}^k \sum_{j=1}^{n_i} (\bar{X}_i -
 = \frac{1}{k-1} \sum_{i=1}^k n_i (\bar{X}_i - \bar{X})^2 = \frac{1}{k-1}
 SSB
 \]</span></p>
-<p>Here, I take <span class="math inline">\(S_w^2 / S_b^2\)</span>.
-Again</p>
+<p>Here, I take <span class="math inline">\(T = S_w^2 / S_b^2\)</span>.
+Under the null hypothesis, if <span class="math inline">\(\mu_i =
+\mu_j\)</span> for all <span class="math inline">\(i, j\)</span>, then
+we expect <span class="math inline">\(S_b^2\)</span> to be small. Thus,
+large <span class="math inline">\(S_b^2\)</span> act as evidence against
+the null hypothesis. Since <span class="math inline">\(S_b^2\)</span> is
+in the denominator, large values of <span class="math inline">\(S_b^2\)</span> lead to small values of <span class="math inline">\(T\)</span>, which is evidence against the null
+hypothesis.</p>
 <pre class="r"><code>n &lt;- length(pain$response)
 k &lt;- 3 # 3 drug types, A, B, C.
 fstat &lt;- (ssw/(n-k)) / (ssb/(k-1)); fstat</code></pre>
@@ -1889,10 +1926,9 @@ where the values calculated manually match up.</p>
 ## Residuals   24  28.44   1.185                     
 ## ---
 ## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
-<p>Values of our test statistic far away from 1 signify evidence against
-the null hypothesis. We get a p-value of 0.000256, which suggests we
-reject the null hypothesis that there is no difference in the effect of
-the drugs.</p>
+<p>Small values signify evidence against the null hypothesis. We get a
+p-value of 0.000256, which suggests we reject the null hypothesis that
+there is no difference in the effect of the drugs.</p>
 <p>Then, we can carry on to do a post-hoc analysis (follow-up analysis)
 with pairwise t-tests. Here, among all three groups, we treat them as
 having equal standard deviations, which is appropriate <strong>given the
