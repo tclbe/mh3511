@@ -19,3 +19,5 @@ and lab 5 ([html](https://tclbe.github.io/mh3511/tutorials_and_labs/lab05.html),
 * Lab 7 ([html](https://tclbe.github.io/mh3511/tutorials_and_labs/lab07.html), [pdf](https://tclbe.github.io/mh3511/tutorials_and_labs/lab07.pdf))
 
 * Lab 8 ([html](https://tclbe.github.io/mh3511/tutorials_and_labs/lab08.html), [pdf](https://tclbe.github.io/mh3511/tutorials_and_labs/lab08.pdf))
+
+* Lab 9 ([html](https://tclbe.github.io/mh3511/tutorials_and_labs/lab09.html), [pdf](https://tclbe.github.io/mh3511/tutorials_and_labs/lab09.pdf))
