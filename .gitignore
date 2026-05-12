@@ -7,4 +7,5 @@ eisvogel.latex
 !*/*.html
 !*/*.Rmd
 !*/*.png
+!*/*.md
 */*-inclass.Rmd
