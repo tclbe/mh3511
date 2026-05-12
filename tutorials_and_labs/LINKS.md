@@ -1,7 +1,7 @@
 ---
 layout: page
 title: "Links"
-permalink: /mh3511
+permalink: /links
 ---
 
 # Links
